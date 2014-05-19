@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class IdleState:State
 {
-    static Vector3 initialPos = Vector3.zero;
+	static Vector3 initialPos = Vector3.zero;
+	//static Vector3 Point1;
+	//static Vector3 Point2;
 
-    GameObject enemyGameObject;
+	GameObject enemyGameObject = GameObject.FindGameObjectWithTag("bluebot");
 
     public override string Description()
     {
@@ -17,14 +19,16 @@ public class IdleState:State
         : base(myGameObject)
     {
         this.enemyGameObject = enemyGameObject;
-    }
+	}
+
+
 
     public override void Enter()
     {
-        myGameObject.GetComponent<SteeringBehaviours>().path.Waypoints.Add(new Vector3(0, 0, -20));
-        myGameObject.GetComponent<SteeringBehaviours>().path.Waypoints.Add(new Vector3(-30, 0, 0));
-        myGameObject.GetComponent<SteeringBehaviours>().path.Waypoints.Add(new Vector3(0, 0, 20));
-        myGameObject.GetComponent<SteeringBehaviours>().path.Waypoints.Add(new Vector3(25, 0, -10));
+		//Point1  = new Vector3(Random.Range(-30.0f,30.0f),0,Random.Range(-30.0f,30.0f));
+		//Point2  = new Vector3(Random.Range(-30.0f,30.0f),0,Random.Range(-30.0f,30.0f));
+		myGameObject.GetComponent<SteeringBehaviours>().path.Waypoints.Add(new Vector3(-30,0,30));
+		myGameObject.GetComponent<SteeringBehaviours>().path.Waypoints.Add(new Vector3(30,0,-30));
         myGameObject.GetComponent<SteeringBehaviours>().path.Looped = true;            
         myGameObject.GetComponent<SteeringBehaviours>().path.draw = true;
         myGameObject.GetComponent<SteeringBehaviours>().TurnOffAll();
@@ -37,7 +41,7 @@ public class IdleState:State
 
     public override void Update()
     {
-        float range = 5.0f;           
+        float range = 15.0f;           
         // Can I see the enemy?
         if ((enemyGameObject.transform.position - myGameObject.transform.position).magnitude < range)
         {
