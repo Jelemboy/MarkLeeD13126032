@@ -7,6 +7,7 @@ class AttackingState:State
 {
     float timeShot = 0.25f;
     GameObject enemyGameObject;
+	GameObject ammopickup = GameObject.FindGameObjectWithTag("ammopickup");
 
     public override string Description()
     {
@@ -32,7 +33,8 @@ class AttackingState:State
 
     public override void Update()
     {
-        float range = 10.0f;
+        float range = 20.0f;
+		float shots = 0.0f;
         timeShot += Time.deltaTime;
         float fov = Mathf.PI / 4.0f;
         // Can I see the enemy?
@@ -56,6 +58,13 @@ class AttackingState:State
                     lazer.transform.position = myGameObject.transform.position;
                     lazer.transform.forward = myGameObject.transform.forward;
                     timeShot = 0.0f;
+					shots += 1;
+					if( shots == 10.0f)
+					{
+						myGameObject.GetComponent<SteeringBehaviours>().SeekEnabled = true;
+						//myGameObject.GetComponent<SteeringBehaviours>().Seek(ammopickup); 
+						shots = 0.0f;
+					}
                 }
             }
         }
